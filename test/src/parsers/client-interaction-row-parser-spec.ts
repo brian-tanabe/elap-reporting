@@ -67,7 +67,7 @@ class ClientInteractionRowParserSpec {
     }
 
     @test
-    shuoldConsiderRowsWithoutTwelveColumnsInvalid() {
+    shouldConsiderRowsWithoutThirteenColumnsInvalid() {
         expect(ClientInteractionRowParser.isValidClientInteraction([
             REPORTING_MONTH_JANUARY_2019,
             OPEN_DATE_NOVEMBER_16_2018,
@@ -85,58 +85,121 @@ class ClientInteractionRowParserSpec {
     }
 
     @test
-    shouldBeAbleToDetermineIfAnOpenCaseWithoutAnyCourtAppearancesIsValid() {
+    shouldConsiderRowsWithMoreThanThirteenColumnsValid() {
+        expect(ClientInteractionRowParser.isValidClientInteraction([
+            REPORTING_MONTH_JANUARY_2019,
+            OPEN_DATE_NOVEMBER_16_2018,
+            CLIENT_NAME,
+            PROGRAM_DV,
+            REFERRAL_SOURCE,
+            COMPLEX_LEGAL_SERVER_NUMBER,
+            ATTORNEY_NAME,
+            LEGAL_ISSUE,
+            TYPE_OF_SERVICE_EXTENDED_SERVICES,
+            STATUS_OPEN,
+            CLOSED_DATE_NULL,
+            NOTES,
+            COURT_APPEARANCES_1,
+            "These",
+            "Are",
+            "Valid",
+            "Columns"
+        ])).to.be.true;
+    }
 
+    @test
+    shouldBeAbleToDetermineIfAnOpenCaseWithoutAnyCourtAppearancesIsValid() {
+        expect(ClientInteractionRowParser.isValidClientInteraction([
+            REPORTING_MONTH_JANUARY_2019,
+            OPEN_DATE_NOVEMBER_16_2018,
+            CLIENT_NAME,
+            PROGRAM_DV,
+            REFERRAL_SOURCE,
+            COMPLEX_LEGAL_SERVER_NUMBER,
+            ATTORNEY_NAME,
+            LEGAL_ISSUE,
+            TYPE_OF_SERVICE_EXTENDED_SERVICES,
+            STATUS_OPEN,
+            CLOSED_DATE_NULL,
+            NOTES,
+            COURT_APPEARANCES_BLANK
+        ])).to.be.true;
     }
 
     @test
     shouldConsiderRowsWithoutReportingMonthsAsInvalid() {
-
+        expect(ClientInteractionRowParser.isValidClientInteraction([
+            "",
+            OPEN_DATE_NOVEMBER_16_2018,
+            CLIENT_NAME,
+            PROGRAM_DV,
+            REFERRAL_SOURCE,
+            COMPLEX_LEGAL_SERVER_NUMBER,
+            ATTORNEY_NAME,
+            LEGAL_ISSUE,
+            TYPE_OF_SERVICE_EXTENDED_SERVICES,
+            STATUS_OPEN,
+            CLOSED_DATE_NULL,
+            NOTES,
+            COURT_APPEARANCES_1
+        ])).to.be.false;
     }
 
     @test
     shouldConsiderRowsWithoutAttorneyNamesAsInvalid() {
-
+        expect(ClientInteractionRowParser.isValidClientInteraction([
+            REPORTING_MONTH_JANUARY_2019,
+            OPEN_DATE_NOVEMBER_16_2018,
+            CLIENT_NAME,
+            PROGRAM_DV,
+            REFERRAL_SOURCE,
+            COMPLEX_LEGAL_SERVER_NUMBER,
+            "",
+            LEGAL_ISSUE,
+            TYPE_OF_SERVICE_EXTENDED_SERVICES,
+            STATUS_OPEN,
+            CLOSED_DATE_NULL,
+            NOTES,
+            COURT_APPEARANCES_1
+        ])).to.be.false;
     }
 
     @test
     shouldConsiderRowsWithoutClientNamesAsInvalid() {
-
+        expect(ClientInteractionRowParser.isValidClientInteraction([
+            REPORTING_MONTH_JANUARY_2019,
+            OPEN_DATE_NOVEMBER_16_2018,
+            "",
+            PROGRAM_DV,
+            REFERRAL_SOURCE,
+            COMPLEX_LEGAL_SERVER_NUMBER,
+            ATTORNEY_NAME,
+            LEGAL_ISSUE,
+            TYPE_OF_SERVICE_EXTENDED_SERVICES,
+            STATUS_OPEN,
+            CLOSED_DATE_NULL,
+            NOTES,
+            COURT_APPEARANCES_1
+        ])).to.be.false;
     }
 
     @test
     shouldConsiderRowsWithoutAnOpenDateAsInvalid() {
-
+        expect(ClientInteractionRowParser.isValidClientInteraction([
+            REPORTING_MONTH_JANUARY_2019,
+            "",
+            CLIENT_NAME,
+            PROGRAM_DV,
+            REFERRAL_SOURCE,
+            COMPLEX_LEGAL_SERVER_NUMBER,
+            ATTORNEY_NAME,
+            LEGAL_ISSUE,
+            TYPE_OF_SERVICE_EXTENDED_SERVICES,
+            STATUS_OPEN,
+            CLOSED_DATE_NULL,
+            NOTES,
+            COURT_APPEARANCES_1
+        ])).to.be.false;
     }
 
-    private createTestArray(
-        reportingMonth: Number,
-        openDate: Number,
-        clientName: String,
-        referralSource: String,
-        legalServerNumber: String,
-        attorneyName: String,
-        legalIssue: String,
-        typeOfService: String,
-        status: String,
-        closedDate: Number,
-        notes: String,
-        courtAppearances: Number
-    ): any[] {
-
-        return [
-            reportingMonth,
-            openDate,
-            clientName,
-            referralSource,
-            legalServerNumber,
-            attorneyName,
-            legalIssue,
-            typeOfService,
-            status,
-            closedDate,
-            notes,
-            courtAppearances
-        ];
-    }
 }

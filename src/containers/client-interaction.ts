@@ -53,7 +53,7 @@ export class ClientInteraction {
             throw new Error("A ClientInteraction cannot have a null open date!");
         }
 
-        if (!courtAppearances) {
+        if (Number.isNaN(courtAppearances.valueOf())) {
             throw new Error("A ClientInteraction cannot have a null court appearances!");
         }
     }

@@ -16,7 +16,7 @@ const COLUMN_DATE_CLOSED: number = 10;
 const COLUMN_NOTES: number = 11;
 const COLUMN_COURT_APPEARANCES: number = 12;
 
-const EXPECTED_NUMBER_OF_COLUMNS = 13;
+const EXPECTED_NUMBER_OF_COLUMNS: number = 13;
 
 export class ClientInteractionRowParser {
 
@@ -27,8 +27,9 @@ export class ClientInteractionRowParser {
      */
     static isValidClientInteraction(row: any[]): Boolean {
 
-        // Check if we have the expected number of rows:
-        if (row.length != EXPECTED_NUMBER_OF_COLUMNS) {
+        // Check if we have the expected number of rows.  They often put stuff to the right of the table.
+        // We'll ignore that but not fail this check.
+        if (Number(row.length.valueOf()) < Number(EXPECTED_NUMBER_OF_COLUMNS)) {
             return false;
         }
 
@@ -58,12 +59,18 @@ export class ClientInteractionRowParser {
         const attorney: String = row[COLUMN_ASSIGNED];
         const status: String = row[COLUMN_STATUS];
         const typeOfService: String = row[COLUMN_TYPE_OF_SERVICE];
-        const courtAppearances: Number = row[COLUMN_COURT_APPEARANCES];
+        const courtAppearancesString: String = row[COLUMN_COURT_APPEARANCES];
 
         // If the case was closed, it's safe to assume there will be a closed date
+        const closedDateString: String = row[COLUMN_DATE_CLOSED];
         let closedDate: Date;
-        if (status === "closed") {
-            closedDate = DateHelper.convertExcelDateToDate(row[COLUMN_DATE_CLOSED]);
+        if (closedDateString === "closed") {
+            closedDate = DateHelper.convertExcelDateToDate(closedDateString);
+        }
+
+        let courtAppearances: Number = 0;
+        if (Number(courtAppearancesString)) {
+            courtAppearances = row[COLUMN_COURT_APPEARANCES];
         }
 
         return new ClientInteraction(
