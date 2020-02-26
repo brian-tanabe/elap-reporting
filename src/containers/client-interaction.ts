@@ -7,7 +7,7 @@ export class ClientInteraction {
     private readonly _clientName: String;
     private readonly _attorneyName: String;
     private readonly _legalServerNumber: String;
-    private readonly _closedDate: Date;
+    private readonly _closedDate?: Date;
     private readonly _typeOfService: String;
     private readonly _courtAppearances: Number;
     private readonly _status: String;
@@ -33,7 +33,7 @@ export class ClientInteraction {
         this._closedDate = closedDate;
         this._typeOfService = typeOfService;
         this._courtAppearances = courtAppearances;
-        this._status = status;
+        this._status = status.toLowerCase();
     }
 
     private validateClientInteraction(reportingMonth: Date, attorneyName: String, clientName: String, openDate: Date, courtAppearances: Number) {
@@ -49,11 +49,11 @@ export class ClientInteraction {
             throw new Error("A ClientInteraction cannot have a null client name!");
         }
 
-        if(!openDate) {
+        if (!openDate) {
             throw new Error("A ClientInteraction cannot have a null open date!");
         }
 
-        if(!courtAppearances) {
+        if (!courtAppearances) {
             throw new Error("A ClientInteraction cannot have a null court appearances!");
         }
     }

@@ -28,7 +28,9 @@
     "validate": "office-addin-manifest validate manifest.xml",
     "watch": "webpack --mode development --watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "excel-date-to-js": "^1.0.2"
+  },
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/polyfill": "^7.6.0",

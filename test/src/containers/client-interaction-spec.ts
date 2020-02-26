@@ -46,7 +46,7 @@ class ClientInteractionSpec {
             CLOSED_DATE_NULL,
             TYPE_OF_SERVICE_EXTENDED_SERVICES,
             2,
-            STATUS_OPEN
+            STATUS_OPEN.toLowerCase()
         );
     }
 
@@ -65,7 +65,7 @@ class ClientInteractionSpec {
                 CLOSED_DATE_NULL,
                 TYPE_OF_SERVICE_EXTENDED_SERVICES,
                 2,
-                STATUS_OPEN
+                STATUS_OPEN.toLowerCase()
             );
         }).to.throw("A ClientInteraction cannot have a null reporting month!");
     }
@@ -87,7 +87,7 @@ class ClientInteractionSpec {
                 CLOSED_DATE_NULL,
                 TYPE_OF_SERVICE_EXTENDED_SERVICES,
                 2,
-                STATUS_OPEN
+                STATUS_OPEN.toLowerCase()
             );
         }).to.throw("A ClientInteraction cannot have a null attorney name!");
     }
@@ -109,7 +109,7 @@ class ClientInteractionSpec {
                 CLOSED_DATE_NULL,
                 TYPE_OF_SERVICE_EXTENDED_SERVICES,
                 2,
-                STATUS_OPEN
+                STATUS_OPEN.toLowerCase()
             );
         }).to.throw();
     }
@@ -131,7 +131,7 @@ class ClientInteractionSpec {
                 CLOSED_DATE_NULL,
                 TYPE_OF_SERVICE_EXTENDED_SERVICES,
                 invalidCourtAppearances,
-                STATUS_OPEN
+                STATUS_OPEN.toLowerCase()
             );
         }).to.throw();
     }
