@@ -13,7 +13,7 @@ const expect = require('chai').expect;
 const REPORT_START_DATE = new Date(Date.UTC(2019, 0, 0).valueOf());
 const REPORT_END_DATE = new Date(Date.UTC(2019, 11, 31).valueOf());
 
-const ATTORNEY_NAME: String = "Ailise Delaney";
+const ATTORNEY_NAME: string = "Ailise Delaney";
 
 const REPORTING_MONTH = new Date(Date.UTC(2019, 2, 0).valueOf());
 const NEXT_MONTH = new Date(Date.UTC(2019, 3, 0).valueOf());

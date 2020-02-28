@@ -2,16 +2,16 @@ import {ClientInteraction} from "../containers/client-interaction";
 
 export abstract class Calculator {
     private readonly clientInteractions: Set<ClientInteraction>;
-    private readonly reportStartDate: Date;
-    private readonly reportEndDate: Date;
+    private readonly _reportStartDate: Date;
+    private readonly _reportEndDate: Date;
 
     constructor(clientInteractions: Set<ClientInteraction>, reportStartDate: Date, reportEndDate: Date) {
         this.clientInteractions = clientInteractions;
-        this.reportStartDate = reportStartDate;
-        this.reportEndDate = reportEndDate;
+        this._reportStartDate = reportStartDate;
+        this._reportEndDate = reportEndDate;
     }
 
-    abstract getCount(attorney: String, month: Date): Number;
+    abstract getCount(attorney: String, month: Date): number;
 
     protected getEligibleClientInteractions(attorney: String, month: Date): Set<ClientInteraction> {
         const eligibleClientInteractions = new Set<ClientInteraction>();
@@ -31,5 +31,14 @@ export abstract class Calculator {
 
     private isSameAttorney(lhs: String, rhs: String) {
         return lhs == rhs;
+    }
+
+
+    get reportStartDate(): Date {
+        return this._reportStartDate;
+    }
+
+    get reportEndDate(): Date {
+        return this._reportEndDate;
     }
 }

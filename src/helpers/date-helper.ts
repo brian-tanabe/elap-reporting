@@ -8,11 +8,11 @@ export class DateHelper {
 
     static getReportStartDate(): Date {
         // TODO: MAKE THIS AN INPUT VARIABLE
-        return new Date(Date.UTC(2019, 0, 0).valueOf());
+        return new Date(Date.UTC(2019, 0, 1).valueOf());
     }
 
     static getReportEndDate(): Date {
         // TODO: MAKE THIS AN INPUT VARIABLE
-        return new Date(Date.UTC(2019, 11, 30).valueOf());
+        return new Date(Date.UTC(2019, 11, 31).valueOf());
     }
 }
