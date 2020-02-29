@@ -3,8 +3,6 @@ import {ReportPresenter} from "./report-presenter";
 const HEIGHT: number = 2;
 const NEXT_ROW_INDEX: number = HEIGHT;
 
-const REPORT_SHEET_BANNER_TITLE: string = "DV Clients Served by DV Staff";
-
 export class ReportHeaderPresenter extends ReportPresenter {
 
     addContent(): void {
@@ -14,7 +12,7 @@ export class ReportHeaderPresenter extends ReportPresenter {
 
         // Re-get the top cell now that the row has been merged.  Set the title, center, and fill:
         const titleRange: Excel.Range = this.reportSheet.getRange("A1:A1");
-        titleRange.values = [[REPORT_SHEET_BANNER_TITLE]];
+        titleRange.values = [[this.reportTitle()]];
         titleRange.format.horizontalAlignment = "Center";
 
         const timeSliceBannerRange: Excel.Range = this.reportSheet.getRange("A2:R2");
@@ -35,6 +33,10 @@ export class ReportHeaderPresenter extends ReportPresenter {
 
     getNextRowIndex(): number {
         return NEXT_ROW_INDEX;
+    }
+
+    protected reportTitle(): string {
+        return "DV Clients Served by DV Staff";
     }
 
 }

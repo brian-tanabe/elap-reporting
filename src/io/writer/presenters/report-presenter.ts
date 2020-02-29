@@ -9,6 +9,8 @@ export abstract class ReportPresenter {
         this.previousPresenter = previousPresenter;
     }
 
+    protected abstract reportTitle(): string;
+
     abstract addContent(): void;
 
     abstract getNextRowIndex(): number;

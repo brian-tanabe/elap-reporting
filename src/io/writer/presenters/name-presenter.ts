@@ -4,11 +4,11 @@ import Worksheet = Excel.Worksheet;
 const HEIGHT: number = 1;
 
 export class NamePresenter extends ReportPresenter {
-    private readonly _name;
+    private readonly name;
 
     constructor(reportSheet: Worksheet, previousPresenter: ReportPresenter, name: String) {
         super(reportSheet, previousPresenter);
-        this._name = name;
+        this.name = name;
     }
 
     addContent(): void {
@@ -22,7 +22,7 @@ export class NamePresenter extends ReportPresenter {
         const nameCell: Excel.Range = this.reportSheet.getCell(rowIndex, 0);
 
         // Set the name:
-        nameCell.values = [[this._name]];
+        nameCell.values = [[this.reportTitle()]];
 
         // Stylize the cell:
         // TODO: FIGURE OUT HOW TO CORRECTLY FILL CELLS.  THIS THROWS AN ERROR.
@@ -33,6 +33,10 @@ export class NamePresenter extends ReportPresenter {
 
     getNextRowIndex(): number {
         return this.previousPresenter.getNextRowIndex() + HEIGHT;
+    }
+
+    protected reportTitle(): string {
+        return this.name;
     }
 
 }

@@ -1,9 +1,9 @@
 import {CountByMonthPresenter} from "./count-by-month-presenter";
 
-export class OpenCasesPresenter extends CountByMonthPresenter {
+export class NewAcceptedCasesPresenter extends CountByMonthPresenter {
 
     protected reportTitle(): string {
-        return "Open Cases";
+        return "New Accepted Cases";
     }
 
 }

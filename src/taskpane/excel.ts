@@ -63,11 +63,7 @@ function generateReport() {
 function getAllSheetNames(sheets: WorksheetCollection): Set<String> {
     const sheetNames = new Set<String>();
     for (let i in sheets.items) {
-        const sheetName: String = sheets.items[i].name;
-
-        // TODO: REMOVE THIS DEBUGGING STATEMENT
-        console.log(`getAllSheetNames: name=[${sheetName}]`);
-        sheetNames.add(sheetName);
+        sheetNames.add(sheets.items[i].name);
     }
 
     return sheetNames;

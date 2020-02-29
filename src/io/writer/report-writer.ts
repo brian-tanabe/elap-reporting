@@ -5,6 +5,8 @@ import {OpenCasesPresenter} from "./presenters/open-cases-presenter";
 import {ClientInteraction} from "../../containers/client-interaction";
 import RequestContext = Excel.RequestContext;
 import {OpenCasesCalculator} from "../../calculators/open-cases-calculator";
+import {NewAcceptedCasesPresenter} from "./presenters/new-accepted-cases-presenter";
+import {NewAcceptedCasesCalculator} from "../../calculators/new-accepted-cases-calculator";
 
 const REPORT_SHEET_NAME = "Report";
 
@@ -50,5 +52,8 @@ export class ReportWriter implements WorksheetWriter {
 
         const openCasesPresenter: OpenCasesPresenter = new OpenCasesPresenter(reportSheet, namePresenter, new OpenCasesCalculator(this.clientInteractions, this.reportStartDate, this.reportEndDate), this.attorneyName);
         openCasesPresenter.addContent();
+
+        const newAcceptedCasesPresenter: NewAcceptedCasesPresenter = new NewAcceptedCasesPresenter(reportSheet, openCasesPresenter, new NewAcceptedCasesCalculator(this.clientInteractions, this.reportStartDate, this.reportEndDate), this.attorneyName);
+        newAcceptedCasesPresenter.addContent();
     }
 }
