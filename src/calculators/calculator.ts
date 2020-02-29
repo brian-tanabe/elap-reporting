@@ -25,7 +25,7 @@ export abstract class Calculator {
         return eligibleClientInteractions;
     }
 
-    private isSameMonth(lhs: Date, rhs: Date): boolean {
+    protected isSameMonth(lhs: Date, rhs: Date): boolean {
         return lhs.getMonth() == rhs.getMonth() && lhs.getFullYear() == rhs.getFullYear();
     }
 

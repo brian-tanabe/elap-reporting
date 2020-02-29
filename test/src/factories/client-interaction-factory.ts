@@ -15,17 +15,17 @@ const CLOSED_DATE_NULL: Date = null;
 export class ClientInteractionFactory {
 
     static createOpenClientInteraction(reportingMonth: Date, attorney: string): ClientInteraction {
-        return ClientInteractionFactory.createClientInteraction(reportingMonth, attorney, STATUS_OPEN);
+        return ClientInteractionFactory.createClientInteraction(reportingMonth, attorney, STATUS_OPEN, faker.date.recent());
     }
 
     static createClosedClientInteraction(reportingMonth: Date, attorney: string): ClientInteraction {
-        return ClientInteractionFactory.createClientInteraction(reportingMonth, attorney, STATUS_CLOSED);
+        return ClientInteractionFactory.createClientInteraction(reportingMonth, attorney, STATUS_CLOSED, faker.date.recent());
     }
 
-    static createClientInteraction(reportingMonth: Date, attorney: string, status: string): ClientInteraction {
+    static createClientInteraction(reportingMonth: Date, attorney: string, status: string, openDate: Date): ClientInteraction {
         let clientInteraction = new ClientInteraction(
             reportingMonth,
-            faker.date.recent(),
+            openDate,
             faker.name.firstName() + " " + faker.name.lastName(),
             attorney,
             faker.random.number().toString(), null,
