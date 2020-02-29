@@ -4,7 +4,7 @@ import {ClientInteraction} from "../containers/client-interaction";
 export class NewAcceptedCasesCalculator extends Calculator {
 
     getCount(attorney: String, month: Date): number {
-        const newCases = new Set<ClientInteraction>();
+        const newCases: Set<ClientInteraction> = new Set<ClientInteraction>();
 
         const clientInteractions = this.getEligibleClientInteractions(attorney, month);
         clientInteractions.forEach((clientInteraction) => {

@@ -9,6 +9,8 @@ import {NewAcceptedCasesPresenter} from "./presenters/new-accepted-cases-present
 import {NewAcceptedCasesCalculator} from "../../calculators/new-accepted-cases-calculator";
 import {ClosedCasesPresenter} from "./presenters/closed-cases-presenter";
 import {ClosedCasesCalculator} from "../../calculators/closed-cases-calculator";
+import {AdviceAndCounselPresenter} from "./presenters/advice-and-counsel-presenter";
+import {AdviceAndCounselCalculator} from "../../calculators/advice-and-counsel-calculator";
 
 const REPORT_SHEET_NAME = "Report";
 
@@ -60,5 +62,8 @@ export class ReportWriter implements WorksheetWriter {
 
         const closedCasesPresenter: ClosedCasesPresenter = new ClosedCasesPresenter(reportSheet, newAcceptedCasesPresenter, new ClosedCasesCalculator(this.clientInteractions, this.reportStartDate, this.reportEndDate), this.attorneyName);
         closedCasesPresenter.addContent();
+
+        const adviceAndCounselPresenter: AdviceAndCounselPresenter = new AdviceAndCounselPresenter(reportSheet, closedCasesPresenter, new AdviceAndCounselCalculator(this.clientInteractions, this.reportStartDate, this.reportEndDate), this.attorneyName);
+        adviceAndCounselPresenter.addContent();
     }
 }
