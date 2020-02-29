@@ -21,6 +21,7 @@ export class CalculatorTestBase {
     protected readonly TYPE_OF_SERVICE_LIMITED_REPRESENTATION: string = "Limited Representation";
     protected readonly TYPE_OF_SERVICE_EXTENDED_SERVICES: string = "Extended Services";
     protected readonly TYPE_OF_SERVICE_ADVICE_AND_COUNSEL: string = "Advice & Counsel";
+    protected readonly TYPE_OF_SERVICE_BRIEF_SERVICES: string = "Brief Services";
 
     // Status
     protected readonly STATUS_OPEN: string = "Open";

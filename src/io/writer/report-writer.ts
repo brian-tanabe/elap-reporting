@@ -3,7 +3,6 @@ import {ReportHeaderPresenter} from "./presenters/report-header-presenter";
 import {NamePresenter} from "./presenters/name-presenter";
 import {OpenCasesPresenter} from "./presenters/open-cases-presenter";
 import {ClientInteraction} from "../../containers/client-interaction";
-import RequestContext = Excel.RequestContext;
 import {OpenCasesCalculator} from "../../calculators/open-cases-calculator";
 import {NewAcceptedCasesPresenter} from "./presenters/new-accepted-cases-presenter";
 import {NewAcceptedCasesCalculator} from "../../calculators/new-accepted-cases-calculator";
@@ -11,6 +10,13 @@ import {ClosedCasesPresenter} from "./presenters/closed-cases-presenter";
 import {ClosedCasesCalculator} from "../../calculators/closed-cases-calculator";
 import {AdviceAndCounselPresenter} from "./presenters/advice-and-counsel-presenter";
 import {AdviceAndCounselCalculator} from "../../calculators/advice-and-counsel-calculator";
+import {BriefServicesPresenter} from "./presenters/brief-services-presenter";
+import {BriefServicesCalculator} from "../../calculators/brief-services-calculator";
+import RequestContext = Excel.RequestContext;
+import {ExtensiveServicesPresenter} from "./presenters/extensive-services-presenter";
+import {ExtensiveServicesCalculator} from "../../calculators/extensive-services-calculator";
+import {LimitedRepresentationPresenter} from "./presenters/limited-representation-presenter";
+import {LimitedRepresentationCalculator} from "../../calculators/limited-representation-calculator";
 
 const REPORT_SHEET_NAME = "Report";
 
@@ -51,9 +57,6 @@ export class ReportWriter implements WorksheetWriter {
         const namePresenter: NamePresenter = new NamePresenter(reportSheet, reportHeaderPresenter, this.attorneyName);
         namePresenter.addContent();
 
-        // TODO: REMOVE THIS DEBUGGING STATEMENT
-        console.log(`ReportWriter: clientInteractions=[${this.clientInteractions.size}]`);
-
         const openCasesPresenter: OpenCasesPresenter = new OpenCasesPresenter(reportSheet, namePresenter, new OpenCasesCalculator(this.clientInteractions, this.reportStartDate, this.reportEndDate), this.attorneyName);
         openCasesPresenter.addContent();
 
@@ -65,5 +68,14 @@ export class ReportWriter implements WorksheetWriter {
 
         const adviceAndCounselPresenter: AdviceAndCounselPresenter = new AdviceAndCounselPresenter(reportSheet, closedCasesPresenter, new AdviceAndCounselCalculator(this.clientInteractions, this.reportStartDate, this.reportEndDate), this.attorneyName);
         adviceAndCounselPresenter.addContent();
+
+        const briefServicesPresenter: BriefServicesPresenter = new BriefServicesPresenter(reportSheet, adviceAndCounselPresenter, new BriefServicesCalculator(this.clientInteractions, this.reportStartDate, this.reportEndDate), this.attorneyName);
+        briefServicesPresenter.addContent();
+
+        const extensiveServicesPresenter: ExtensiveServicesPresenter = new ExtensiveServicesPresenter(reportSheet, briefServicesPresenter, new ExtensiveServicesCalculator(this.clientInteractions, this.reportStartDate, this.reportEndDate), this.attorneyName);
+        extensiveServicesPresenter.addContent();
+
+        const limitedRepresentationPresenter: LimitedRepresentationPresenter = new LimitedRepresentationPresenter(reportSheet, extensiveServicesPresenter, new LimitedRepresentationCalculator(this.clientInteractions, this.reportStartDate, this.reportEndDate), this.attorneyName);
+        limitedRepresentationPresenter.addContent();
     }
 }
