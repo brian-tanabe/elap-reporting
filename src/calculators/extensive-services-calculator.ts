@@ -3,7 +3,7 @@ import {ClientInteraction} from "../containers/client-interaction";
 
 export class ExtensiveServicesCalculator extends Calculator {
 
-    getCount(attorney: String, month: Date): number {
+    getCountForMonth(attorney: String, month: Date): number {
         const extensiveServices: Set<ClientInteraction> = new Set<ClientInteraction>();
 
         const clientInteractions = this.getEligibleClientInteractions(attorney, month);

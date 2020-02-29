@@ -26,7 +26,7 @@ class NewAcceptedCasesCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(newAcceptedCasesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.be.equal(2);
+        expect(newAcceptedCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.be.equal(2);
     }
 
     @test
@@ -63,7 +63,7 @@ class NewAcceptedCasesCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(newAcceptedCasesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.be.equal(2);
+        expect(newAcceptedCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.be.equal(2);
     }
 
     @test
@@ -90,7 +90,7 @@ class NewAcceptedCasesCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(newAcceptedCasesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.be.equal(2);
+        expect(newAcceptedCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.be.equal(2);
     }
 
     @test
@@ -127,6 +127,6 @@ class NewAcceptedCasesCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(newAcceptedCasesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.be.equal(2);
+        expect(newAcceptedCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.be.equal(2);
     }
 }

@@ -24,7 +24,7 @@ class BriefServicesCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(briefServicesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
+        expect(briefServicesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
     }
 
     @test
@@ -41,7 +41,7 @@ class BriefServicesCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(briefServicesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(4);
+        expect(briefServicesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(4);
     }
 
     @test
@@ -67,7 +67,7 @@ class BriefServicesCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(briefServicesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
+        expect(briefServicesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
     }
 
     @test
@@ -92,7 +92,7 @@ class BriefServicesCalculatorSpec extends CalculatorTestBase {
             this.REPORT_START_DATE,
             this.REPORT_END_DATE
         );
-        expect(briefServicesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
+        expect(briefServicesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
     }
 
     @test
@@ -116,7 +116,7 @@ class BriefServicesCalculatorSpec extends CalculatorTestBase {
             this.REPORT_START_DATE,
             this.REPORT_END_DATE
         );
-        expect(briefServicesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
+        expect(briefServicesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
     }
 
 }

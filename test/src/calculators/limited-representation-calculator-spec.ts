@@ -24,7 +24,7 @@ class LimitedRepresentationCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(limitedRepresentationCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
+        expect(limitedRepresentationCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
     }
 
     @test
@@ -41,7 +41,7 @@ class LimitedRepresentationCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(limitedRepresentationCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(4);
+        expect(limitedRepresentationCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(4);
     }
 
     @test
@@ -67,7 +67,7 @@ class LimitedRepresentationCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(limitedRepresentationCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
+        expect(limitedRepresentationCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
     }
 
     @test
@@ -92,7 +92,7 @@ class LimitedRepresentationCalculatorSpec extends CalculatorTestBase {
             this.REPORT_START_DATE,
             this.REPORT_END_DATE
         );
-        expect(limitedRepresentationCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
+        expect(limitedRepresentationCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
     }
 
     @test
@@ -108,7 +108,7 @@ class LimitedRepresentationCalculatorSpec extends CalculatorTestBase {
             this.REPORT_START_DATE,
             this.REPORT_END_DATE
         );
-        expect(limitedRepresentationCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
+        expect(limitedRepresentationCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
     }
 
 }

@@ -11,7 +11,7 @@ export abstract class Calculator {
         this._reportEndDate = reportEndDate;
     }
 
-    abstract getCount(attorney: String, month: Date): number;
+    abstract getCountForMonth(attorney: String, month: Date): number;
 
     protected getEligibleClientInteractions(attorney: String, month: Date): Set<ClientInteraction> {
         const eligibleClientInteractions = new Set<ClientInteraction>();

@@ -30,18 +30,18 @@ export abstract class CountByMonthPresenter extends ReportPresenter {
     }
 
     addContent(): void {
-        const janCount = this.calculator.getCount(this.attorneyName, this.getMonthAsDate(JAN_INDEX));
-        const febCount = this.calculator.getCount(this.attorneyName, this.getMonthAsDate(FEB_INDEX));
-        const marCount = this.calculator.getCount(this.attorneyName, this.getMonthAsDate(MAR_INDEX));
-        const aprCount = this.calculator.getCount(this.attorneyName, this.getMonthAsDate(APR_INDEX));
-        const mayCount = this.calculator.getCount(this.attorneyName, this.getMonthAsDate(MAY_INDEX));
-        const junCount = this.calculator.getCount(this.attorneyName, this.getMonthAsDate(JUN_INDEX));
-        const julCount = this.calculator.getCount(this.attorneyName, this.getMonthAsDate(JUL_INDEX));
-        const augCount = this.calculator.getCount(this.attorneyName, this.getMonthAsDate(AUG_INDEX));
-        const sepCount = this.calculator.getCount(this.attorneyName, this.getMonthAsDate(SEP_INDEX));
-        const octCount = this.calculator.getCount(this.attorneyName, this.getMonthAsDate(OCT_INDEX));
-        const novCount = this.calculator.getCount(this.attorneyName, this.getMonthAsDate(NOV_INDEX));
-        const decCount = this.calculator.getCount(this.attorneyName, this.getMonthAsDate(DEC_INDEX));
+        const janCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(JAN_INDEX));
+        const febCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(FEB_INDEX));
+        const marCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(MAR_INDEX));
+        const aprCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(APR_INDEX));
+        const mayCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(MAY_INDEX));
+        const junCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(JUN_INDEX));
+        const julCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(JUL_INDEX));
+        const augCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(AUG_INDEX));
+        const sepCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(SEP_INDEX));
+        const octCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(OCT_INDEX));
+        const novCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(NOV_INDEX));
+        const decCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(DEC_INDEX));
 
         const openCasesArray = [
             [

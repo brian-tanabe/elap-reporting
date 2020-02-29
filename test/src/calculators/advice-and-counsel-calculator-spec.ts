@@ -26,7 +26,7 @@ class AdviceAndCounselCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(adviceAndCounselCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
+        expect(adviceAndCounselCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
     }
 
     @test
@@ -43,7 +43,7 @@ class AdviceAndCounselCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(adviceAndCounselCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(4);
+        expect(adviceAndCounselCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(4);
     }
 
     @test
@@ -68,7 +68,7 @@ class AdviceAndCounselCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(adviceAndCounselCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
+        expect(adviceAndCounselCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
     }
 
     @test
@@ -95,7 +95,7 @@ class AdviceAndCounselCalculatorSpec extends CalculatorTestBase {
         });
 
         let adviceAndCounselCalculator = new AdviceAndCounselCalculator(clientInteractions, this.REPORT_START_DATE, this.REPORT_END_DATE);
-        expect(adviceAndCounselCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
+        expect(adviceAndCounselCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
     }
 
     @test
@@ -122,7 +122,7 @@ class AdviceAndCounselCalculatorSpec extends CalculatorTestBase {
         });
 
         let adviceAndCounselCalculator = new AdviceAndCounselCalculator(clientInteractions, this.REPORT_START_DATE, this.REPORT_END_DATE);
-        expect(adviceAndCounselCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
+        expect(adviceAndCounselCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(6);
     }
 
     @test
@@ -152,7 +152,7 @@ class AdviceAndCounselCalculatorSpec extends CalculatorTestBase {
         clientInteractions.add(clientInteractionWithAnd);
 
         let adviceAndCounselCalculator = new AdviceAndCounselCalculator(clientInteractions, this.REPORT_START_DATE, this.REPORT_END_DATE);
-        expect(adviceAndCounselCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
+        expect(adviceAndCounselCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
     }
 
     @test
@@ -182,6 +182,6 @@ class AdviceAndCounselCalculatorSpec extends CalculatorTestBase {
         clientInteractions.add(clientInteractionWithAnd);
 
         let adviceAndCounselCalculator = new AdviceAndCounselCalculator(clientInteractions, this.REPORT_START_DATE, this.REPORT_END_DATE);
-        expect(adviceAndCounselCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
+        expect(adviceAndCounselCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
     }
 }

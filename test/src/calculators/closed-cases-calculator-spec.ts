@@ -25,7 +25,7 @@ class ClosedCasesCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(closedCasesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
+        expect(closedCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
     }
 
     @test
@@ -41,7 +41,7 @@ class ClosedCasesCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(closedCasesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(4);
+        expect(closedCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(4);
     }
 
     @test
@@ -57,7 +57,7 @@ class ClosedCasesCalculatorSpec extends CalculatorTestBase {
             this.REPORT_END_DATE
         );
 
-        expect(closedCasesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(2);
+        expect(closedCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(2);
     }
 
     @test
@@ -82,7 +82,7 @@ class ClosedCasesCalculatorSpec extends CalculatorTestBase {
         });
 
         let closedCasesCalculator = new ClosedCasesCalculator(clientInteractions, this.REPORT_START_DATE, this.REPORT_END_DATE);
-        expect(closedCasesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(2);
+        expect(closedCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(2);
     }
 
     @test
@@ -107,7 +107,7 @@ class ClosedCasesCalculatorSpec extends CalculatorTestBase {
         });
 
         let closedCasesCalculator = new ClosedCasesCalculator(clientInteractions, this.REPORT_START_DATE, this.REPORT_END_DATE);
-        expect(closedCasesCalculator.getCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(2);
+        expect(closedCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(2);
     }
 
 }
