@@ -43,6 +43,9 @@ export abstract class CountByMonthPresenter extends ReportPresenter {
         const novCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(NOV_INDEX));
         const decCount = this.calculator.getCountForMonth(this.attorneyName, this.getMonthAsDate(DEC_INDEX));
 
+        // Some calculators have weird implementations for the total column:
+        const totalCount = this.calculator.getTotalCount(this.attorneyName, this.getMonthAsDate(DEC_INDEX));
+
         const openCasesArray = [
             [
                 this.reportTitle(),
@@ -62,7 +65,7 @@ export abstract class CountByMonthPresenter extends ReportPresenter {
                 novCount,
                 decCount,
                 octCount + novCount + decCount,
-                janCount + febCount + marCount + aprCount + mayCount + junCount + julCount + augCount + sepCount + octCount + novCount + decCount
+                totalCount
             ]
         ];
 

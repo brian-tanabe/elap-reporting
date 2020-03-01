@@ -3,13 +3,25 @@ import {ClientInteraction} from "../containers/client-interaction";
 
 export class AdviceAndCounselCalculator extends Calculator {
 
-    getCountForMonth(attorney: String, month: Date): number {
-        const adviceAndCounsel: Set<ClientInteraction> = new Set<ClientInteraction>();
+    getCountForMonth(attorney: string, month: Date): number {
+        const clientInteractions = this.getEligibleClientInteractionsForMonth(attorney, month);
+        return this.getNumberOfAdviceAndCounselClientInteractions(clientInteractions);
+    }
 
-        const clientInteractions = this.getEligibleClientInteractions(attorney, month);
+    getTotalCount(attorney: string, year: Date): number {
+        const clientInteractions = this.getEligibleClientInteractionsForYear(attorney, year);
+        return this.getNumberOfAdviceAndCounselClientInteractions(clientInteractions);
+    }
+
+    /**
+     * Returns a Set of ClientInteractions whose type of representation is "Counsel and Advice" or a few variants
+     * @param clientInteractions
+     */
+    private getNumberOfAdviceAndCounselClientInteractions(clientInteractions: Set<ClientInteraction>): number {
+        const adviceAndCounsel: Set<String> = new Set<String>();
         clientInteractions.forEach((clientInteraction) => {
             if (this.isAdviceAndCounsel(clientInteraction) || this.isCounselAndAdvice(clientInteraction)) {
-                adviceAndCounsel.add(clientInteraction);
+                adviceAndCounsel.add(clientInteraction.clientName);
             }
         });
 

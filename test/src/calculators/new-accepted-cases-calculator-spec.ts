@@ -4,6 +4,8 @@ import 'mocha';
 import {suite, test} from "mocha-typescript";
 import {ClientInteraction} from "../../../src/containers/client-interaction";
 import {CalculatorTestBase} from "./calculator-test-base";
+import {ClientInteractionFactory} from "../factories/client-interaction-factory";
+import {OpenCasesCalculator} from "../../../src/calculators/open-cases-calculator";
 
 var faker = require('faker');
 
@@ -128,5 +130,81 @@ class NewAcceptedCasesCalculatorSpec extends CalculatorTestBase {
         );
 
         expect(newAcceptedCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.be.equal(2);
+    }
+
+    @test
+    shouldBeAbleToGetTotalNewAcceptedCasesForMultipleMonthsForMultipleAttorneysForOverMultipleYears() {
+        const briefServicesPreviousYear = this.createTestClientInteractionsWithOpenDate(
+            this.PREVIOUS_YEAR,
+            3,
+            1,
+            4,
+            this.PREVIOUS_YEAR
+        );
+        const briefServicesPreviousReportingMonth = this.createTestClientInteractionsWithOpenDate(
+            this.PREVIOUS_MONTH,
+            3,
+            1,
+            4,
+            this.PREVIOUS_MONTH
+        );
+        const briefServicesCurrentReportingMonth = this.createTestClientInteractionsWithOpenDate(
+            this.REPORTING_MONTH,
+            4,
+            2,
+            4,
+            this.REPORTING_MONTH
+        );
+        const briefServicesNextYear = this.createTestClientInteractionsWithOpenDate(
+            this.NEXT_YEAR,
+            5,
+            3,
+            4,
+            this.NEXT_YEAR
+        );
+
+        let newAcceptedCasesCalculator = new NewAcceptedCasesCalculator(
+            this.combineSets([
+                briefServicesPreviousYear,
+                briefServicesPreviousReportingMonth,
+                briefServicesCurrentReportingMonth,
+                briefServicesNextYear
+            ]),
+            this.REPORT_START_DATE,
+            this.REPORT_END_DATE
+        );
+
+        expect(newAcceptedCasesCalculator.getTotalCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(10);
+    }
+
+    @test
+    shouldNotCountMultipleNewAcceptedClientInteractionsForTheSameClient() {
+        const newAcceptedClientInteraction: ClientInteraction = ClientInteractionFactory.createOpenClientInteractionWithOpenDate(
+            this.REPORTING_MONTH,
+            this.ATTORNEY_NAME,
+            this.REPORTING_MONTH
+        );
+        const anotherNewAcceptedClientInteraction: ClientInteraction = new ClientInteraction(
+            newAcceptedClientInteraction.reportingMonth,
+            newAcceptedClientInteraction.openDate,
+            newAcceptedClientInteraction.clientName,
+            newAcceptedClientInteraction.attorneyName,
+            faker.random.number().toString(),
+            newAcceptedClientInteraction.closedDate,
+            newAcceptedClientInteraction.typeOfService,
+            newAcceptedClientInteraction.courtAppearances,
+            newAcceptedClientInteraction.status
+        );
+
+        let newAcceptedCasesCalculator = new NewAcceptedCasesCalculator(
+            new Set<ClientInteraction>([
+                newAcceptedClientInteraction,
+                anotherNewAcceptedClientInteraction
+            ]),
+            this.REPORT_START_DATE,
+            this.REPORT_END_DATE
+        );
+
+        expect(newAcceptedCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
     }
 }

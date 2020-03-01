@@ -3,17 +3,24 @@ import {ClientInteraction} from "../containers/client-interaction";
 
 export class ClosedCasesCalculator extends Calculator {
 
-    getCountForMonth(attorney: String, month: Date): number {
-        const closedCases: Set<ClientInteraction> = new Set<ClientInteraction>();
+    getCountForMonth(attorney: string, month: Date): number {
+        const clientInteractions = this.getEligibleClientInteractionsForMonth(attorney, month);
+        return this.getNumberOfClosedClientInteractions(clientInteractions);
+    }
 
-        const clientInteractions = this.getEligibleClientInteractions(attorney, month);
+    getTotalCount(attorney: string, year: Date): number {
+        const clientInteractions = this.getEligibleClientInteractionsForYear(attorney, year);
+        return this.getNumberOfClosedClientInteractions(clientInteractions);
+    }
+
+    private getNumberOfClosedClientInteractions(clientInteractions: Set<ClientInteraction>): number {
+        const closedCases: Set<String> = new Set<String>();
         clientInteractions.forEach((clientInteraction) => {
             if (clientInteraction.status.toLowerCase() == "closed") {
-                closedCases.add(clientInteraction);
+                closedCases.add(clientInteraction.clientName);
             }
         });
 
-        return closedCases.size;
+        return closedCases.size
     }
-
 }

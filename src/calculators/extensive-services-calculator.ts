@@ -3,13 +3,21 @@ import {ClientInteraction} from "../containers/client-interaction";
 
 export class ExtensiveServicesCalculator extends Calculator {
 
-    getCountForMonth(attorney: String, month: Date): number {
-        const extensiveServices: Set<ClientInteraction> = new Set<ClientInteraction>();
+    getCountForMonth(attorney: string, month: Date): number {
+        const clientInteractions = this.getEligibleClientInteractionsForMonth(attorney, month);
+        return this.getNumberExtensiveServicesClientInteractions(clientInteractions);
+    }
 
-        const clientInteractions = this.getEligibleClientInteractions(attorney, month);
+    getTotalCount(attorney: string, year: Date): number {
+        const clientInteractions: Set<ClientInteraction> = this.getEligibleClientInteractionsForYear(attorney, year);
+        return this.getNumberExtensiveServicesClientInteractions(clientInteractions);
+    }
+
+    private getNumberExtensiveServicesClientInteractions(clientInteractions: Set<ClientInteraction>): number {
+        const extensiveServices: Set<String> = new Set<String>();
         clientInteractions.forEach((clientInteraction) => {
             if (this.isExtensiveServices(clientInteraction) || this.isExtensiveRepresentation(clientInteraction)) {
-                extensiveServices.add(clientInteraction);
+                extensiveServices.add(clientInteraction.clientName);
             }
         });
 

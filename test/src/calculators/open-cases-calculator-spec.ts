@@ -6,6 +6,8 @@ import {OpenCasesCalculator} from "../../../src/calculators/open-cases-calculato
 
 import {suite, test} from "mocha-typescript";
 import {ClientInteraction} from "../../../src/containers/client-interaction";
+import {ClientInteractionFactory} from "../factories/client-interaction-factory";
+import * as faker from "faker";
 
 const expect = require('chai').expect;
 
@@ -62,52 +64,101 @@ class OpenCasesCalculatorSpec extends CalculatorTestBase {
 
     @test
     shouldBeAbleToComputeMultipleOpenCasesForMultipleMonths() {
-        let clientInteractions = new Set<ClientInteraction>();
-        this.createTestClientInteractions(
+        const clientInteractionInReportingMonth = this.createTestClientInteractions(
             this.REPORTING_MONTH,
             4,
             2,
             0
-        ).forEach((clientInteraction) => {
-            clientInteractions.add(clientInteraction);
-        });
+        );
 
-        this.createTestClientInteractions(
+        const clientInteractionInNextMonth = this.createTestClientInteractions(
             this.NEXT_MONTH,
             4,
             2,
             0
-        ).forEach((clientInteraction) => {
-            clientInteractions.add(clientInteraction);
-        });
+        );
 
-        let openCasesCalculator = new OpenCasesCalculator(clientInteractions, this.REPORT_START_DATE, this.REPORT_END_DATE);
+        let openCasesCalculator = new OpenCasesCalculator(
+            this.combineTwoSets(clientInteractionInReportingMonth, clientInteractionInNextMonth),
+            this.REPORT_START_DATE,
+            this.REPORT_END_DATE
+        );
         expect(openCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(4);
     }
 
     @test
     shouldBeAbleToComputeMultipleOpenCasesForMultipleMonthsForMultipleAttorneys() {
-        let clientInteractions = new Set<ClientInteraction>();
-        this.createTestClientInteractions(
+        const clientInteractionInReportingMonth = this.createTestClientInteractions(
             this.REPORTING_MONTH,
             4,
             2,
             2
-        ).forEach((clientInteraction) => {
-            clientInteractions.add(clientInteraction);
-        });
-
-        this.createTestClientInteractions(
+        );
+        const clientInteractionInNextMonth = this.createTestClientInteractions(
             this.NEXT_MONTH,
             4,
             2,
             2
-        ).forEach((clientInteraction) => {
-            clientInteractions.add(clientInteraction);
-        });
+        );
 
-        let openCasesCalculator = new OpenCasesCalculator(clientInteractions, this.REPORT_START_DATE, this.REPORT_END_DATE);
+        let openCasesCalculator = new OpenCasesCalculator(
+            this.combineTwoSets(clientInteractionInReportingMonth, clientInteractionInNextMonth),
+            this.REPORT_START_DATE,
+            this.REPORT_END_DATE
+        );
         expect(openCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(4);
     }
 
+    @test
+    shouldOnlyCountCasesOpenAtTheEndOfDecemberAsTheTotalForTheYear() {
+        const clientInteractionInReportingMonth = this.createTestClientInteractions(
+            this.REPORTING_MONTH,
+            4,
+            2,
+            2
+        );
+        const clientInteractionInNextMonth = this.createTestClientInteractions(
+            new Date(Date.UTC(this.REPORTING_MONTH.getUTCFullYear(), 11, 1)),
+            9,
+            12,
+            2
+        );
+
+        const openCasesCalculator = new OpenCasesCalculator(
+            this.combineTwoSets(clientInteractionInReportingMonth, clientInteractionInNextMonth),
+            this.REPORT_START_DATE,
+            this.REPORT_END_DATE
+        );
+        expect(openCasesCalculator.getTotalCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.be.equal(9);
+    }
+
+    @test
+    shouldNotCountMultipleOpenClientInteractionsForTheSameClient() {
+        const openClientInteraction: ClientInteraction = ClientInteractionFactory.createOpenClientInteraction(
+            this.REPORTING_MONTH,
+            this.ATTORNEY_NAME,
+        );
+        const anotherOpenClientInteraction: ClientInteraction = new ClientInteraction(
+            openClientInteraction.reportingMonth,
+            openClientInteraction.openDate,
+            openClientInteraction.clientName,
+            openClientInteraction.attorneyName,
+            faker.random.number().toString(),
+            openClientInteraction.closedDate,
+            openClientInteraction.typeOfService,
+            openClientInteraction.courtAppearances,
+            openClientInteraction.status
+        );
+
+        let openCasesCalculator = new OpenCasesCalculator(
+            new Set<ClientInteraction>([
+                openClientInteraction,
+                anotherOpenClientInteraction
+            ]),
+            this.REPORT_START_DATE,
+            this.REPORT_END_DATE
+        );
+
+        expect(openCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
+    }
 }

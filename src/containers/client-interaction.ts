@@ -27,13 +27,13 @@ export class ClientInteraction {
 
         this._reportingMonth = reportingMonth;
         this._openDate = openDate;
-        this._clientName = clientName;
-        this._attorneyName = attorneyName;
-        this._legalServerNumber = legalServerNumber;
+        this._clientName = clientName.trim();
+        this._attorneyName = attorneyName.trim();
+        this._legalServerNumber = legalServerNumber.trim();
         this._closedDate = closedDate;
-        this._typeOfService = typeOfService;
+        this._typeOfService = typeOfService.trim();
         this._courtAppearances = courtAppearances;
-        this._status = status.toLowerCase();
+        this._status = status.toLowerCase().trim();
     }
 
     private validateClientInteraction(reportingMonth: Date, attorneyName: String, clientName: String, openDate: Date, courtAppearances: Number) {

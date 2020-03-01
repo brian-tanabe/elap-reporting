@@ -3,18 +3,25 @@ import {ClientInteraction} from "../containers/client-interaction";
 
 export class LimitedRepresentationCalculator extends Calculator {
 
-    getCountForMonth(attorney: String, month: Date): number {
-        const limitedRepresentation: Set<ClientInteraction> = new Set<ClientInteraction>();
+    getCountForMonth(attorney: string, month: Date): number {
+        const clientInteractions = this.getEligibleClientInteractionsForMonth(attorney, month);
+        return this.getNumberOfLimitedRepresentationClientInteractions(clientInteractions);
+    }
 
-        const clientInteractions = this.getEligibleClientInteractions(attorney, month);
+    getTotalCount(attorney: string, year: Date): number {
+        const clientInteractions: Set<ClientInteraction> = this.getEligibleClientInteractionsForYear(attorney, year);
+        return this.getNumberOfLimitedRepresentationClientInteractions(clientInteractions);
+    }
+
+    private getNumberOfLimitedRepresentationClientInteractions(clientInteractions: Set<ClientInteraction>): number {
+        const limitedRepresentation: Set<String> = new Set<String>();
         clientInteractions.forEach((clientInteraction) => {
             if (clientInteraction.typeOfService.toLowerCase() == "limited representation") {
-                limitedRepresentation.add(clientInteraction);
+                limitedRepresentation.add(clientInteraction.clientName);
             }
         });
 
         return limitedRepresentation.size;
     }
-
 }
 

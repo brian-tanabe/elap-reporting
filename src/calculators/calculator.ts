@@ -11,9 +11,11 @@ export abstract class Calculator {
         this._reportEndDate = reportEndDate;
     }
 
-    abstract getCountForMonth(attorney: String, month: Date): number;
+    abstract getCountForMonth(attorney: string, month: Date): number;
 
-    protected getEligibleClientInteractions(attorney: String, month: Date): Set<ClientInteraction> {
+    abstract getTotalCount(attorney: string, year: Date): number;
+
+    protected getEligibleClientInteractionsForMonth(attorney: string, month: Date): Set<ClientInteraction> {
         const eligibleClientInteractions = new Set<ClientInteraction>();
 
         this.clientInteractions.forEach((clientInteraction) => {
@@ -25,8 +27,24 @@ export abstract class Calculator {
         return eligibleClientInteractions;
     }
 
+    protected getEligibleClientInteractionsForYear(attorney: string, year: Date): Set<ClientInteraction> {
+        const eligibleClientInteractions = new Set<ClientInteraction>();
+
+        this.clientInteractions.forEach((clientInteraction) => {
+            if (this.isSameYear(clientInteraction.reportingMonth, year) && this.isSameAttorney(clientInteraction.attorneyName, attorney)) {
+                eligibleClientInteractions.add(clientInteraction);
+            }
+        });
+
+        return eligibleClientInteractions;
+    }
+
     protected isSameMonth(lhs: Date, rhs: Date): boolean {
-        return lhs.getMonth() == rhs.getMonth() && lhs.getFullYear() == rhs.getFullYear();
+        return lhs.getMonth() == rhs.getMonth() && this.isSameYear(lhs, rhs);
+    }
+
+    private isSameYear(lhs: Date, rhs: Date): boolean {
+        return lhs.getFullYear() == rhs.getFullYear();
     }
 
     private isSameAttorney(lhs: String, rhs: String) {

@@ -3,17 +3,24 @@ import {ClientInteraction} from "../containers/client-interaction";
 
 export class NewAcceptedCasesCalculator extends Calculator {
 
-    getCountForMonth(attorney: String, month: Date): number {
-        const newCases: Set<ClientInteraction> = new Set<ClientInteraction>();
+    getCountForMonth(attorney: string, month: Date): number {
+        const clientInteractions = this.getEligibleClientInteractionsForMonth(attorney, month);
+        return this.getNumberOfNewAcceptedClientInteractions(clientInteractions);
+    }
 
-        const clientInteractions = this.getEligibleClientInteractions(attorney, month);
+    getTotalCount(attorney: string, year: Date): number {
+        const clientInteractions = this.getEligibleClientInteractionsForYear(attorney, year);
+        return this.getNumberOfNewAcceptedClientInteractions(clientInteractions);
+    }
+
+    private getNumberOfNewAcceptedClientInteractions(clientInteractions: Set<ClientInteraction>): number {
+        const newCases: Set<String> = new Set<String>();
         clientInteractions.forEach((clientInteraction) => {
-            if (this.isSameMonth(clientInteraction.openDate, month)) {
-                newCases.add(clientInteraction);
+            if (this.isSameMonth(clientInteraction.openDate, clientInteraction.reportingMonth)) {
+                newCases.add(clientInteraction.clientName);
             }
         });
 
-        return newCases.size;
+        return newCases.size
     }
-
 }

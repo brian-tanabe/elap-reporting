@@ -10,9 +10,11 @@ export class CalculatorTestBase {
     protected readonly REPORT_END_DATE: Date = new Date(Date.UTC(2019, 11, 31).valueOf());
 
     // Dates
+    protected readonly PREVIOUS_YEAR: Date = new Date(Date.UTC(2018, 2, 1).valueOf());
     protected readonly PREVIOUS_MONTH: Date = new Date(Date.UTC(2019, 1, 1).valueOf());
     protected readonly REPORTING_MONTH: Date = new Date(Date.UTC(2019, 2, 1).valueOf());
     protected readonly NEXT_MONTH: Date = new Date(Date.UTC(2019, 3, 1).valueOf());
+    protected readonly NEXT_YEAR: Date = new Date(Date.UTC(2020, 2, 1).valueOf());
 
     // Attorney names
     protected readonly ATTORNEY_NAME: string = "Ailise Delaney";
@@ -88,6 +90,18 @@ export class CalculatorTestBase {
         }
 
         return testClientInteractions;
+    }
+
+    protected combineSets(setsToCombine: Array<Set<ClientInteraction>>): Set<ClientInteraction> {
+        const result: Set<ClientInteraction> = new Set();
+
+        setsToCombine.forEach(function (set) {
+            set.forEach(function (item) {
+                result.add(item);
+            });
+        });
+
+        return result;
     }
 
     protected combineTwoSets(lhs: Set<ClientInteraction>, rhs: Set<ClientInteraction>): Set<ClientInteraction> {

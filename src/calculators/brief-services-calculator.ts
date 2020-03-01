@@ -3,17 +3,24 @@ import {ClientInteraction} from "../containers/client-interaction";
 
 export class BriefServicesCalculator extends Calculator {
 
-    getCountForMonth(attorney: String, month: Date): number {
-        const briefServices: Set<ClientInteraction> = new Set<ClientInteraction>();
+    getCountForMonth(attorney: string, month: Date): number {
+        const clientInteractions = this.getEligibleClientInteractionsForMonth(attorney, month);
+        return this.getNumberOfBriefServiceClientInteractions(clientInteractions);
+    }
 
-        const clientInteractions = this.getEligibleClientInteractions(attorney, month);
+    getTotalCount(attorney: string, year: Date): number {
+        const clientInteractions = this.getEligibleClientInteractionsForYear(attorney, year);
+        return this.getNumberOfBriefServiceClientInteractions(clientInteractions);
+    }
+
+    private getNumberOfBriefServiceClientInteractions(clientInteractions: Set<ClientInteraction>): number {
+        const briefServices: Set<String> = new Set<String>();
         clientInteractions.forEach((clientInteraction) => {
             if (clientInteraction.typeOfService.toLowerCase() == "brief services") {
-                briefServices.add(clientInteraction);
+                briefServices.add(clientInteraction.clientName);
             }
         });
 
         return briefServices.size;
     }
-
 }
