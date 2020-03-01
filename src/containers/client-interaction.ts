@@ -4,24 +4,24 @@
 export class ClientInteraction {
     private readonly _reportingMonth: Date;
     private readonly _openDate: Date;
-    private readonly _clientName: String;
-    private readonly _attorneyName: String;
-    private readonly _legalServerNumber: String;
+    private readonly _clientName: string;
+    private readonly _attorneyName: string;
+    private readonly _legalServerNumber: string;
     private readonly _closedDate?: Date;
-    private readonly _typeOfService: String;
-    private readonly _courtAppearances: Number;
-    private readonly _status: String;
+    private readonly _typeOfService: string;
+    private readonly _courtAppearances: number;
+    private readonly _status: string;
 
     constructor(
         reportingMonth: Date,
         openDate: Date,
-        clientName: String,
-        attorneyName: String,
-        legalServerNumber: String,
+        clientName: string,
+        attorneyName: string,
+        legalServerNumber: string,
         closedDate: Date,
-        typeOfService: String,
-        courtAppearances: Number,
-        status: String
+        typeOfService: string,
+        courtAppearances: number,
+        status: string
     ) {
         this.validateClientInteraction(reportingMonth, attorneyName, clientName, openDate, courtAppearances);
 
@@ -62,7 +62,7 @@ export class ClientInteraction {
         return "ClientInteraction reportingMonth=[" + this._reportingMonth + "], attorney=[" + this._attorneyName + "], name=[" + this._clientName + "], openDate=[" + this._openDate + "]";
     }
 
-    // Getters
+
     get reportingMonth(): Date {
         return this._reportingMonth;
     }
@@ -71,15 +71,15 @@ export class ClientInteraction {
         return this._openDate;
     }
 
-    get clientName(): String {
+    get clientName(): string {
         return this._clientName;
     }
 
-    get attorneyName(): String {
+    get attorneyName(): string {
         return this._attorneyName;
     }
 
-    get legalServerNumber(): String {
+    get legalServerNumber(): string {
         return this._legalServerNumber;
     }
 
@@ -87,15 +87,15 @@ export class ClientInteraction {
         return this._closedDate;
     }
 
-    get typeOfService(): String {
+    get typeOfService(): string {
         return this._typeOfService;
     }
 
-    get courtAppearances(): Number {
+    get courtAppearances(): number {
         return this._courtAppearances;
     }
 
-    get status(): String {
+    get status(): string {
         return this._status;
     }
 }

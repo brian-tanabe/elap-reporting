@@ -53,22 +53,22 @@ export class ClientInteractionRowParser {
 
         const reportingMonth: Date = DateHelper.convertExcelDateToDate(row[COLUMN_REPORTING_MONTH]);
         const openDate: Date = DateHelper.convertExcelDateToDate(row[COLUMN_OPEN_DATE]);
-        const client: String = row[COLUMN_CLIENT];
+        const client: string = row[COLUMN_CLIENT];
 
-        const legalServerNumber: String = row[COLUMN_LEGAL_SEVER_NUMBER];
-        const attorney: String = row[COLUMN_ASSIGNED];
-        const status: String = row[COLUMN_STATUS];
-        const typeOfService: String = row[COLUMN_TYPE_OF_SERVICE];
-        const courtAppearancesString: String = row[COLUMN_COURT_APPEARANCES];
+        const legalServerNumber: string = row[COLUMN_LEGAL_SEVER_NUMBER];
+        const attorney: string = row[COLUMN_ASSIGNED];
+        const status: string = row[COLUMN_STATUS];
+        const typeOfService: string = row[COLUMN_TYPE_OF_SERVICE];
+        const courtAppearancesString: string = row[COLUMN_COURT_APPEARANCES];
 
         // If the case was closed, it's safe to assume there will be a closed date
-        const closedDateString: String = row[COLUMN_DATE_CLOSED];
+        const closedDateString: string = row[COLUMN_DATE_CLOSED];
         let closedDate: Date;
         if (closedDateString === "closed") {
             closedDate = DateHelper.convertExcelDateToDate(closedDateString);
         }
 
-        let courtAppearances: Number = 0;
+        let courtAppearances: number = 0;
         if (Number(courtAppearancesString)) {
             courtAppearances = row[COLUMN_COURT_APPEARANCES];
         }
