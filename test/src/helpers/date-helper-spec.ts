@@ -59,4 +59,5 @@ class DateHelperSpec {
             DateHelper.convertExcelDateToDate("   ")
         }).to.throw("wrong input format")
     }
+
 }

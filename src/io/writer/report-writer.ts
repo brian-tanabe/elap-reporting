@@ -12,7 +12,6 @@ import {AdviceAndCounselPresenter} from "./presenters/advice-and-counsel-present
 import {AdviceAndCounselCalculator} from "../../calculators/advice-and-counsel-calculator";
 import {BriefServicesPresenter} from "./presenters/brief-services-presenter";
 import {BriefServicesCalculator} from "../../calculators/brief-services-calculator";
-import RequestContext = Excel.RequestContext;
 import {ExtensiveServicesPresenter} from "./presenters/extensive-services-presenter";
 import {ExtensiveServicesCalculator} from "../../calculators/extensive-services-calculator";
 import {LimitedRepresentationPresenter} from "./presenters/limited-representation-presenter";
@@ -23,6 +22,7 @@ import {AutoFitDecorator} from "./decorators/auto-fit-decorator";
 import {CellColorDecorator} from "./decorators/cell-color-decorator";
 import {CenterJustifyTextDecorator} from "./decorators/center-justify-text-decorator";
 import {TextColorDecorator} from "./decorators/text-color-decorator";
+import RequestContext = Excel.RequestContext;
 
 const REPORT_SHEET_NAME = "Report";
 
@@ -89,7 +89,11 @@ export class ReportWriter implements WorksheetWriter {
         const openCasesPresenter: OpenCasesPresenter = new OpenCasesPresenter(
             reportSheet,
             namePresenter,
-            new OpenCasesCalculator(this.clientInteractions, this.reportStartDate, this.reportEndDate),
+            new OpenCasesCalculator(
+                this.clientInteractions,
+                this.reportStartDate,
+                this.reportEndDate
+            ),
             this.attorneyName,
             new Array<Decorator>(lightBlueCellColorDecorator, darkBlueCellColorDecorator, whiteTextDecorator)
         );

@@ -40,11 +40,11 @@ export abstract class Calculator {
     }
 
     protected isSameMonth(lhs: Date, rhs: Date): boolean {
-        return lhs.getMonth() == rhs.getMonth() && this.isSameYear(lhs, rhs);
+        return lhs.getUTCMonth() == rhs.getUTCMonth() && this.isSameYear(lhs, rhs);
     }
 
     private isSameYear(lhs: Date, rhs: Date): boolean {
-        return lhs.getFullYear() == rhs.getFullYear();
+        return lhs.getUTCFullYear() == rhs.getUTCFullYear();
     }
 
     private isSameAttorney(lhs: String, rhs: String) {
