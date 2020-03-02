@@ -1,13 +1,14 @@
 import {ReportPresenter} from "./report-presenter";
 import Worksheet = Excel.Worksheet;
+import {Decorator} from "../decorators/decorator";
 
 const HEIGHT: number = 1;
 
 export class NamePresenter extends ReportPresenter {
-    private readonly name;
+    private readonly name: string;
 
-    constructor(reportSheet: Worksheet, previousPresenter: ReportPresenter, name: String) {
-        super(reportSheet, previousPresenter);
+    constructor(reportSheet: Worksheet, previousPresenter: ReportPresenter, name: string, decorators: Array<Decorator>) {
+        super(reportSheet, previousPresenter, decorators);
         this.name = name;
     }
 
@@ -15,20 +16,14 @@ export class NamePresenter extends ReportPresenter {
         // Get the cell to place the name:
         const rowIndex: number = this.previousPresenter.getNextRowIndex();
 
-        // TODO REMOVE THIS DEBUGGING STATEMENT:
-        console.log(`NamePresenter addContent: row=[${rowIndex}]`);
-
         // getCell is a zero-indexed API:
         const nameCell: Excel.Range = this.reportSheet.getCell(rowIndex, 0);
 
         // Set the name:
         nameCell.values = [[this.reportTitle()]];
 
-        // Stylize the cell:
-        // TODO: FIGURE OUT HOW TO CORRECTLY FILL CELLS.  THIS THROWS AN ERROR.
-        nameCell.format.autofitColumns();
-        // nameCell.format.fill.color = "#472C4";
-        // nameCell.format.fill.color = "#472C4";
+        // Decorate this cell
+        this.decorate(nameCell);
     }
 
     getNextRowIndex(): number {

@@ -1,5 +1,11 @@
 import {ReportPresenter} from "./report-presenter";
 import {Calculator} from "../../../calculators/calculator";
+import {Decorator} from "../decorators/decorator";
+import {BoldDecorator} from "../decorators/bold-decorator";
+import {CellColorDecorator} from "../decorators/cell-color-decorator";
+import {CenterJustifyTextDecorator} from "../decorators/center-justify-text-decorator";
+import {TextColorDecorator} from "../decorators/text-color-decorator";
+import {LeftJustifyTextDecorator} from "../decorators/left-justify-text-decorator";
 import Worksheet = Excel.Worksheet;
 
 const JAN_INDEX: number = 0;
@@ -21,12 +27,22 @@ const WIDTH: number = 18;
 export abstract class CountByMonthPresenter extends ReportPresenter {
     protected readonly calculator: Calculator;
     protected readonly attorneyName: string;
+    private readonly boldDecorator = new BoldDecorator();
+    private readonly darkBlueCellColorDecorator = new CellColorDecorator("#4175B0");
+    private readonly centerTextDecorator = new CenterJustifyTextDecorator();
+    private readonly leftJustifyTextDecorator = new LeftJustifyTextDecorator();
+    private readonly whiteTextDecorator = new TextColorDecorator("white");
 
-    constructor(reportSheet: Worksheet, previousPresenter: ReportPresenter, calculator: Calculator, attorneyName: string) {
-        super(reportSheet, previousPresenter);
+    constructor(reportSheet: Worksheet, previousPresenter: ReportPresenter, calculator: Calculator, attorneyName: string, decorators: Array<Decorator>) {
+        super(reportSheet, previousPresenter, decorators);
 
         this.calculator = calculator;
         this.attorneyName = attorneyName;
+
+        // TODO: REJECT ATTEMPTS TO ADD DECORATORS TO THIS CLASS.  IT DEFAULTS TO ITS OWN LIST:
+        // if(decorators.length != 0) {
+        //     throw new Error(`The ${this.constructor.name} does not support custom decorators!`);
+        // }
     }
 
     addContent(): void {
@@ -75,15 +91,47 @@ export abstract class CountByMonthPresenter extends ReportPresenter {
 
         // Stylize the row:
         range.format.autofitColumns();
+
+        this.decorate(range);
     }
 
     getNextRowIndex(): number {
         return this.previousPresenter.getNextRowIndex() + 1;
     }
 
+    // Overwritten method
+    protected decorate(range: Excel.Range): void {
+        // Styling common to the entire row:
+        this.centerTextDecorator.decorate(range);
+
+        // Realign the name cell to be left justified
+        const nameCell = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 0, 1, 1);
+        this.leftJustifyTextDecorator.decorate(nameCell);
+
+        // Styling for the quarter cells
+        const firstQuarterRange = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 4, 1, 1);
+        this.darkBlueCellColorDecorator.decorate(firstQuarterRange);
+        this.whiteTextDecorator.decorate(firstQuarterRange);
+
+        const secondQuarterRange = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 8, 1, 1);
+        this.darkBlueCellColorDecorator.decorate(secondQuarterRange);
+        this.whiteTextDecorator.decorate(secondQuarterRange);
+
+        const thirdQuarterRange = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 12, 1, 1);
+        this.darkBlueCellColorDecorator.decorate(thirdQuarterRange);
+        this.whiteTextDecorator.decorate(thirdQuarterRange);
+
+        const forthQuarterRange = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 16, 1, 1);
+        this.darkBlueCellColorDecorator.decorate(forthQuarterRange);
+        this.whiteTextDecorator.decorate(forthQuarterRange);
+
+        // Bold-ify the total cell
+        const totalCell = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 17, 1, 1);
+        this.boldDecorator.decorate(totalCell);
+    }
+
     private getMonthAsDate(monthIndex: number): Date {
         const year = this.calculator.reportStartDate.getUTCFullYear();
-
         return new Date(Date.UTC(year, monthIndex, 1).valueOf());
     }
 }
