@@ -59,7 +59,7 @@ export class ClientInteraction {
     }
 
     toString(): String {
-        return "ClientInteraction reportingMonth=[" + this._reportingMonth + "], attorney=[" + this._attorneyName + "], name=[" + this._clientName + "], openDate=[" + this._openDate + "]";
+        return `ClientInteraction: reportingMonth=[${this.reportingMonth}], attorney=[${this.attorneyName}], name=[${this.clientName}], status=[${this.status}], openDate=[${this.openDate}], closedDate=[${this.closedDate}], typeOfService=[${this.typeOfService}], courtAppearances=[${this.courtAppearances}], legalServerNumber=[${this.legalServerNumber}]`;
     }
 
 

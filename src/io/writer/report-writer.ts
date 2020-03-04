@@ -45,7 +45,7 @@ export class ReportWriter implements WorksheetWriter {
      * We'll generate a clean report every time
      */
     deleteSheet(): void {
-        const reportSheet: Excel.Worksheet = this.context.workbook.worksheets.getItemOrNullObject(REPORT_SHEET_NAME);
+        const reportSheet: Excel.Worksheet = this.context.workbook.worksheets.getItemOrNullObject(this.getReportSheetName());
         if (reportSheet) {
             reportSheet.delete();
         }
@@ -56,7 +56,7 @@ export class ReportWriter implements WorksheetWriter {
      */
     createSheet(): void {
         // Sheet
-        const reportSheet: Excel.Worksheet = this.context.workbook.worksheets.add(REPORT_SHEET_NAME);
+        const reportSheet: Excel.Worksheet = this.context.workbook.worksheets.add(this.getReportSheetName());
 
         // Decorators
         const boldDecorator = new BoldDecorator();
@@ -176,5 +176,9 @@ export class ReportWriter implements WorksheetWriter {
             new Array<Decorator>(lightBlueCellColorDecorator)
         );
         limitedRepresentationPresenter.addContent();
+    }
+
+    private getReportSheetName(): string {
+        return REPORT_SHEET_NAME + "-" + this.attorneyName;
     }
 }

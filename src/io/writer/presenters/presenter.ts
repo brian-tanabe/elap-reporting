@@ -1,13 +1,13 @@
 import Worksheet = Excel.Worksheet;
 import {Decorator} from "../decorators/decorator";
 
-export abstract class ReportPresenter {
-    protected readonly reportSheet: Worksheet;
-    protected readonly previousPresenter: ReportPresenter;
+export abstract class Presenter {
+    protected readonly sheet: Worksheet;
+    protected readonly previousPresenter: Presenter;
     protected readonly decorators: Array<Decorator>;
 
-    constructor(reportSheet: Worksheet, previousPresenter: ReportPresenter, decorators: Array<Decorator>) {
-        this.reportSheet = reportSheet;
+    constructor(worksheet: Worksheet, previousPresenter: Presenter, decorators: Array<Decorator>) {
+        this.sheet = worksheet;
         this.previousPresenter = previousPresenter;
         this.decorators = decorators;
     }

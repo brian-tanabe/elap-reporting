@@ -1,13 +1,13 @@
-import {ReportPresenter} from "./report-presenter";
+import {Presenter} from "./presenter";
 import Worksheet = Excel.Worksheet;
 import {Decorator} from "../decorators/decorator";
 
 const HEIGHT: number = 1;
 
-export class NamePresenter extends ReportPresenter {
+export class NamePresenter extends Presenter {
     private readonly name: string;
 
-    constructor(reportSheet: Worksheet, previousPresenter: ReportPresenter, name: string, decorators: Array<Decorator>) {
+    constructor(reportSheet: Worksheet, previousPresenter: Presenter, name: string, decorators: Array<Decorator>) {
         super(reportSheet, previousPresenter, decorators);
         this.name = name;
     }
@@ -17,7 +17,7 @@ export class NamePresenter extends ReportPresenter {
         const rowIndex: number = this.previousPresenter.getNextRowIndex();
 
         // getCell is a zero-indexed API:
-        const nameCell: Excel.Range = this.reportSheet.getCell(rowIndex, 0);
+        const nameCell: Excel.Range = this.sheet.getCell(rowIndex, 0);
 
         // Set the name:
         nameCell.values = [[this.reportTitle()]];

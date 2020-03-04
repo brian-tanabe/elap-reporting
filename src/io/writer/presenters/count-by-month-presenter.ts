@@ -1,4 +1,4 @@
-import {ReportPresenter} from "./report-presenter";
+import {Presenter} from "./presenter";
 import {Calculator} from "../../../calculators/calculator";
 import {Decorator} from "../decorators/decorator";
 import {BoldDecorator} from "../decorators/bold-decorator";
@@ -24,7 +24,7 @@ const DEC_INDEX: number = 11;
 const HEIGHT: number = 1;
 const WIDTH: number = 18;
 
-export abstract class CountByMonthPresenter extends ReportPresenter {
+export abstract class CountByMonthPresenter extends Presenter {
     protected readonly calculator: Calculator;
     protected readonly attorneyName: string;
     private readonly boldDecorator = new BoldDecorator();
@@ -33,7 +33,7 @@ export abstract class CountByMonthPresenter extends ReportPresenter {
     private readonly leftJustifyTextDecorator = new LeftJustifyTextDecorator();
     private readonly whiteTextDecorator = new TextColorDecorator("white");
 
-    constructor(reportSheet: Worksheet, previousPresenter: ReportPresenter, calculator: Calculator, attorneyName: string, decorators: Array<Decorator>) {
+    constructor(reportSheet: Worksheet, previousPresenter: Presenter, calculator: Calculator, attorneyName: string, decorators: Array<Decorator>) {
         super(reportSheet, previousPresenter, decorators);
 
         this.calculator = calculator;
@@ -86,7 +86,7 @@ export abstract class CountByMonthPresenter extends ReportPresenter {
         ];
 
         // Add the data
-        const range = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 0, HEIGHT, WIDTH);
+        const range = this.sheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 0, HEIGHT, WIDTH);
         range.values = openCasesArray;
 
         // Stylize the row:
@@ -105,33 +105,35 @@ export abstract class CountByMonthPresenter extends ReportPresenter {
         this.centerTextDecorator.decorate(range);
 
         // Realign the name cell to be left justified
-        const nameCell = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 0, 1, 1);
+        const nameCell = this.sheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 0, 1, 1);
         this.leftJustifyTextDecorator.decorate(nameCell);
 
         // Styling for the quarter cells
-        const firstQuarterRange = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 4, 1, 1);
+        const firstQuarterRange = this.sheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 4, 1, 1);
         this.darkBlueCellColorDecorator.decorate(firstQuarterRange);
         this.whiteTextDecorator.decorate(firstQuarterRange);
 
-        const secondQuarterRange = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 8, 1, 1);
+        const secondQuarterRange = this.sheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 8, 1, 1);
         this.darkBlueCellColorDecorator.decorate(secondQuarterRange);
         this.whiteTextDecorator.decorate(secondQuarterRange);
 
-        const thirdQuarterRange = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 12, 1, 1);
+        const thirdQuarterRange = this.sheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 12, 1, 1);
         this.darkBlueCellColorDecorator.decorate(thirdQuarterRange);
         this.whiteTextDecorator.decorate(thirdQuarterRange);
 
-        const forthQuarterRange = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 16, 1, 1);
+        const forthQuarterRange = this.sheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 16, 1, 1);
         this.darkBlueCellColorDecorator.decorate(forthQuarterRange);
         this.whiteTextDecorator.decorate(forthQuarterRange);
 
         // Bold-ify the total cell
-        const totalCell = this.reportSheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 17, 1, 1);
+        const totalCell = this.sheet.getRangeByIndexes(this.previousPresenter.getNextRowIndex(), 17, 1, 1);
         this.boldDecorator.decorate(totalCell);
     }
 
     private getMonthAsDate(monthIndex: number): Date {
         const year = this.calculator.reportStartDate.getUTCFullYear();
-        return new Date(Date.UTC(year, monthIndex, 1).valueOf());
+
+        // Using the middle of the month to lazily avoid timezone shenanigans
+        return new Date(Date.UTC(year, monthIndex, 15).valueOf());
     }
 }

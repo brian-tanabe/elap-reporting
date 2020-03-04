@@ -9,20 +9,21 @@ import WorksheetCollection = Excel.WorksheetCollection;
 import RequestContext = Excel.RequestContext;
 import {ClientInteraction} from "../containers/client-interaction";
 import {ClientInteractionRowParser} from "../parsers/client-interaction-row-parser";
-import {Set} from "collections/set";
 import {ReportWriter} from "../io/writer/report-writer";
 import {DateHelper} from "../helpers/date-helper";
 import {ClientInteractionHelper} from "../helpers/client-interaction-helper";
+import {TemplateWriter} from "../io/writer/template-writer";
 
 Office.onReady(info => {
     if (info.host === Office.HostType.Excel) {
         document.getElementById("sideload-msg").style.display = "none";
         document.getElementById("app-body").style.display = "flex";
-        document.getElementById("run").onclick = generateReport;
+        document.getElementById("generate-report").onclick = generateReport;
+        document.getElementById("generate-template").onclick = generateTemplate;
     }
 });
 
-function generateReport() {
+function generateReport(): void {
     Excel.run(function (context: RequestContext) {
 
         // Get the range of the current active worksheet
@@ -33,11 +34,8 @@ function generateReport() {
         return context.sync().then(function () {
 
             // Get all client interactions for this sheet
-            const clientInteractions = parseSheetForClientInteractions(filledInRange);
+            const clientInteractions: Set<ClientInteraction> = parseSheetForClientInteractions(filledInRange);
             const attorneyName: string = ClientInteractionHelper.getAttorneyName(clientInteractions);
-
-            // TODO: REMOVE THIS DEBUGGING STATEMENT:
-            console.log(`generateReport: clientInteractions.size=[${clientInteractions.size}]`);
 
             // This class creates and decorates the reports sheet
             const reportWriter: ReportWriter = new ReportWriter(
@@ -57,6 +55,16 @@ function generateReport() {
             // This needs to be the final line of the block
             return context.sync();
         });
+        //.catch((error) => showErrorDialog(error));
+    });
+}
+
+function generateTemplate(): void {
+    Excel.run(function (context: RequestContext) {
+        const templateWriter: TemplateWriter = new TemplateWriter(context);
+        templateWriter.createSheet();
+
+        return context.sync();
     });
 }
 
@@ -80,4 +88,9 @@ function parseSheetForClientInteractions(sheetRange: Excel.Range): Set<ClientInt
     });
 
     return clientInteractions;
+}
+
+function showErrorDialog(errorMessage): void {
+    console.error(errorMessage);
+    Office.context.ui.displayDialogAsync("https://error-dialog.html");
 }
