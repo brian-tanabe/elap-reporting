@@ -1,6 +1,5 @@
 import {Calculator} from "./calculator";
 import {ClientInteraction} from "../containers/client-interaction";
-import {daysUntilCertificateExpires} from "office-addin-dev-certs/lib/defaults";
 
 export class OpenCasesCalculator extends Calculator {
 
@@ -10,12 +9,15 @@ export class OpenCasesCalculator extends Calculator {
     }
 
     getTotalCount(attorney: string, year: Date): number {
-        // It appears they only count cases open at the end of the year in the total.  Let's just
-        // find the open cases in December
-        const december: Date = new Date(Date.UTC(year.getUTCFullYear(), 11, 1).valueOf());
+        // It appears they only count cases open at the end of the year or the current month, whichever
+        // is earlier.  Let's find the last month with cases
+        const finalMonth: Date = this.findLatestMonthWithCases(attorney, year);
 
-        const clientInteraction = this.getEligibleClientInteractionsForMonth(attorney, december);
-        return this.getNumberOfOpenCasesClientInteractions(clientInteraction);
+        // Get the cases for the final month we determined earlier
+        const clientInteractions: Set<ClientInteraction> = this.getEligibleClientInteractionsForMonth(attorney, finalMonth);
+
+        // Count the number of open cases in this month
+        return this.getNumberOfOpenCasesClientInteractions(clientInteractions);
     }
 
     private getNumberOfOpenCasesClientInteractions(clientInteractions: Set<ClientInteraction>): number {
@@ -27,5 +29,18 @@ export class OpenCasesCalculator extends Calculator {
         });
 
         return openCases.size;
+    }
+
+    private findLatestMonthWithCases(attorney: string, year: Date) {
+        let finalMonth: Date = null;
+        for (let monthIndex = 0; monthIndex < 12; monthIndex++) {
+            const month: Date = new Date(Date.UTC(year.getUTCFullYear(), monthIndex, 1).valueOf());
+            const clientInteractions: Set<ClientInteraction> = this.getEligibleClientInteractionsForMonth(attorney, month);
+            if (clientInteractions.size > 0) {
+                finalMonth = month;
+            }
+        }
+
+        return finalMonth;
     }
 }

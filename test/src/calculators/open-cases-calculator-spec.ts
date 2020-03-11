@@ -161,4 +161,27 @@ class OpenCasesCalculatorSpec extends CalculatorTestBase {
 
         expect(openCasesCalculator.getCountForMonth(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.equal(1);
     }
+
+    @test
+    shouldCountTheCurrentMonthsOpenCasesCountIfItIsNotDecember() {
+        const clientInteractionInReportingMonth = this.createTestClientInteractions(
+            this.REPORTING_MONTH,
+            4,
+            2,
+            2
+        );
+        const clientInteractionInNextMonth = this.createTestClientInteractions(
+            this.NEXT_MONTH,
+            9,
+            12,
+            2
+        );
+
+        const openCasesCalculator = new OpenCasesCalculator(
+            this.combineTwoSets(clientInteractionInReportingMonth, clientInteractionInNextMonth),
+            this.REPORT_START_DATE,
+            this.REPORT_END_DATE
+        );
+        expect(openCasesCalculator.getTotalCount(this.ATTORNEY_NAME, this.REPORTING_MONTH)).to.be.equal(9);
+    }
 }
